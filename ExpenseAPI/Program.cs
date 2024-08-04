@@ -10,6 +10,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// 在伺服器端設置 CORS 標頭，允許來自不同來源的請求
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        // builder.WithOrigins("http://localhost:5264")
+        builder.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 // 如何註冊 ExpenseContext
 builder.Services.AddDbContext<ExpenseContext>(options =>
     options.UseInMemoryDatabase("ExpenseContext"));
@@ -22,6 +34,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors();
 
 app.UseHttpsRedirection();
 

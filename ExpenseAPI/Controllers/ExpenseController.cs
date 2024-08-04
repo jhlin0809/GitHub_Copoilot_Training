@@ -23,10 +23,14 @@ namespace ExpenseAPI.Controllers
     public class ExpenseController : ControllerBase
     {
         private readonly ExpenseContext _context;
+        
+        // 我想要注入 ILogger
+        private readonly ILogger<ExpenseController> _logger;
 
-        public ExpenseController(ExpenseContext context)
+        public ExpenseController(ExpenseContext context, ILogger<ExpenseController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET /api/expense
